@@ -114,7 +114,7 @@ const IconDarkMode = ({ openMenu, setOpenMenu, setIsDarkModeActive }) => {
         </MenuHandler>
       )}
       {/* Drop-down menu at hover on MenuHandler */}
-      <MenuList className="w-fit grid grid-cols-1 gap-3 overflow-visible dark:bg-darkMode-dark50 dark:text-darkMode-dark700 bg-gray-800 text-darkMode-dark50 outline-none border-none z-50">
+      <MenuList className="w-fit grid grid-cols-1 gap-3 overflow-visible dark:bg-darkMode-dark300 dark:text-darkMode-dark700 bg-deep-purple-700 text-darkMode-dark50 outline-none border-none z-50">
         <ul className="col-span-4 flex w-full flex-col gap-1 outline-none border-none">
           {menuItems.map(({ title, icon }) => (
             <MenuItem

@@ -40,7 +40,7 @@ const Header = ({ setIsDarkModeActive }) => {
   );
 
   return (
-    <Navbar className="dark:bg-darkMode-dark900 bg-gray-900 border-gray-900 sticky top-0 z-10 h-max max-w-full rounded-none px-4 py-2 lg:px-8 lg:py-4 dark:border-darkMode-dark950 dark:outline-darkMode-dark950">
+    <Navbar className="dark:bg-darkMode-dark900 bg-deep-purple-900 border-deep-purple-900 sticky top-0 z-10 h-max max-w-full rounded-none px-4 py-2 lg:px-8 lg:py-4 dark:border-darkMode-dark950 dark:outline-darkMode-dark950">
       <div className="flex items-center justify-between text-blue-gray-900">
         <Link
           target="_blank"

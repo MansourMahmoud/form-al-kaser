@@ -179,9 +179,9 @@ const Quote = ({ isDarkModeActive }) => {
     }
   };
 
-  const typographyStyle = "-mb-3 dark-text";
+  const typographyStyle = "-mb-3 dark-text text-deep-purple-400";
   const inputStyle = "placeholder:text-gray-200 dark-text";
-  const fieldStyle = "flex flex-col gap-5";
+  const fieldStyle = "flex flex-col gap-5 ";
 
   const saudiRigion = [
     "الرياض",
@@ -206,22 +206,23 @@ const Quote = ({ isDarkModeActive }) => {
         <Link target="_blank" to={`https://www.al-kaser.com/products`}>
           <Button
             variant={isDarkModeActive ? "outlined" : ""}
-            className="dark:text-darkMode-dark50 dark:border-white bg-gray-800 hover:bg-gray-900 dark:bg-inherit dark:hover:bg-darkMode-dark50 dark:hover:text-darkMode-dark950 duration-300 transition-all"
+            className="dark:text-darkMode-dark50 dark:border-white bg-deep-purple-400 hover:bg-deep-purple-600 dark:bg-inherit dark:hover:bg-darkMode-dark50 dark:hover:text-darkMode-dark950 duration-300 transition-all"
           >
-            اذهب الي متجرنا
+            أذهب إلى متجرنا
           </Button>
         </Link>
       </div>
       {/* <!-- Right column container with form --> */}
       <div className="flex flex-col items-center gap-5">
-        <p className="dark:text-darkMode-dark50 text-center text-3xl font-bold tracking-wide">
-          النموذج
+        <p className="dark:text-darkMode-dark50 text-center text-lg font-bold tracking-wide mb-5 w-[90%] sm:w-[80%] md:w-[70%] lg:w-[50%] text-deep-purple-400">
+          أهلا وسهلا بك في نموذج اختيار منتج أو خدمة، سيساعدك هذا النموذج في
+          اختيار المنتج المناسب لك
         </p>
         <form
           ref={myFrom}
           onSubmit={handleMessage}
           dir="rtl"
-          className="flex flex-col gap-2 w-full sm:w-[80%] md:w-[80%] lg:w-[50%]"
+          className="flex flex-col gap-2 w-full md:w-[80%] lg:w-[55%] shadow dark:shadow-darkMode-dark50 shadow-gray-600 p-10"
         >
           {/* <!-- full name --> */}
           <div className={`${fieldStyle}`}>
@@ -233,8 +234,8 @@ const Quote = ({ isDarkModeActive }) => {
               الإسم الكامل
             </Typography>
             <Input
-              color={isDarkModeActive ? "green" : "gray"}
-              label="الإسم الاول والاخير"
+              color={isDarkModeActive ? "green" : "deep-purple"}
+              label="الاسم الأول والأخير"
               className={`${inputStyle}`}
               value={message.fullName}
               onChange={(ev) =>
@@ -272,7 +273,7 @@ const Quote = ({ isDarkModeActive }) => {
               <Input
                 type="tel"
                 className={`rounded-r-none ${inputStyle} `}
-                color={isDarkModeActive ? "green" : "gray"}
+                color={isDarkModeActive ? "green" : "deep-purple"}
                 label="رقم الهاتف"
                 value={message.phone}
                 onChange={(ev) =>
@@ -293,7 +294,7 @@ const Quote = ({ isDarkModeActive }) => {
               البريد الإلكتروني
             </Typography>
             <Input
-              color={isDarkModeActive ? "green" : "gray"}
+              color={isDarkModeActive ? "green" : "deep-purple"}
               label="البريد الإلكتروني"
               className={`${inputStyle}`}
               value={message.email}
@@ -317,7 +318,7 @@ const Quote = ({ isDarkModeActive }) => {
               <div className="">
                 <Select
                   ref={selectProducts}
-                  color={isDarkModeActive ? "green" : "black"}
+                  color={isDarkModeActive ? "green" : "deep-purple"}
                   label="إختر المنتج"
                   className=" dark:text-darkMode-dark50"
                   labelProps={{
@@ -375,7 +376,7 @@ const Quote = ({ isDarkModeActive }) => {
 
               <div className="">
                 <Input
-                  color={isDarkModeActive ? "green" : "gray"}
+                  color={isDarkModeActive ? "green" : "deep-purple"}
                   label="ادخل عدد المنتج الذي تريده"
                   className={`${inputStyle}`}
                   value={message.numberOfProducts}
@@ -396,7 +397,7 @@ const Quote = ({ isDarkModeActive }) => {
           {/*images */}
           <div className="flex flex-col gap-y-2  group">
             <span
-              className={`pl-1 text-blue-gray-900 font-bold dark:text-darkMode-dark50`}
+              className={`pl-1 text-deep-purple-400 font-bold dark:text-darkMode-dark50`}
             >
               المرفقات
             </span>
@@ -427,7 +428,7 @@ const Quote = ({ isDarkModeActive }) => {
                     images.length > 0
                       ? "h-fit rounded-md p-2"
                       : "h-10 rounded-full"
-                  } h-fit text-sm bg-inherit border-[2px] dark:border-[1px] border-gray-300 text-gray-600 gap-1 flex items-center justify-center hover:bg-gray-300 hover:text-blue-gray-900 transition-all duration-200 dark:hover:bg-darkMode-dark800 dark:hover:text-darkMode-dark50 dark:bg-darkMode-dark950 `}
+                  } h-fit text-sm bg-inherit border-[2px] dark:border-[1px] border-gray-300 text-deep-purple-400 gap-1 flex items-center justify-center hover:bg-gray-300 hover:text-deep-purple-400 transition-all duration-200 dark:hover:bg-darkMode-dark800 dark:hover:text-darkMode-dark50 dark:bg-darkMode-dark950 `}
                 >
                   {images.length > 0 ? (
                     <span className="dark:text-darkMode-dark50 flex flex-col h-fit">
@@ -454,7 +455,7 @@ const Quote = ({ isDarkModeActive }) => {
                         />
                       </svg>
 
-                      <span className="dark:text-darkMode-dark50">
+                      <span className="dark:text-darkMode-dark50 ">
                         اضغط هنا لرفع صور موقعك
                       </span>
                     </div>
@@ -481,7 +482,7 @@ const Quote = ({ isDarkModeActive }) => {
                 </label>
               </Badge>
             ) : (
-              <label className="dark:text-darkMode-dark50 cursor-pointer overflow-hidden text-center w-full h-10 text-sm bg-inherit border-[3px] dark:border-[1px] border-gray-300 text-gray-600 rounded-full gap-1 flex items-center justify-center hover:bg-gray-300 hover:text-blue-gray-900 transition-all duration-200 dark:hover:bg-darkMode-dark800 dark:hover:text-darkMode-dark50 dark:bg-darkMode-dark950">
+              <label className="dark:text-darkMode-dark50 cursor-pointer overflow-hidden text-center w-full h-10 text-sm bg-inherit border-[3px] dark:border-[1px] border-gray-300 text-deep-purple-400 rounded-full gap-1 flex items-center justify-center hover:bg-gray-300 hover:text-deep-purple-400 transition-all duration-200 dark:hover:bg-darkMode-dark800 dark:hover:text-darkMode-dark50 dark:bg-darkMode-dark950">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -497,7 +498,7 @@ const Quote = ({ isDarkModeActive }) => {
                   />
                 </svg>
 
-                <span className="dark:text-darkMode-whiteColor50">
+                <span className="dark:text-darkMode-whiteColor50 ">
                   اضغط هنا لرفع صور موقعك
                 </span>
 
@@ -536,7 +537,7 @@ const Quote = ({ isDarkModeActive }) => {
 
             <Select
               ref={selectRegion}
-              color={isDarkModeActive ? "green" : "black"}
+              color={isDarkModeActive ? "green" : "deep-purple"}
               label="اختر المنطقة"
               className=" dark:text-darkMode-dark50"
               labelProps={{
@@ -578,7 +579,7 @@ const Quote = ({ isDarkModeActive }) => {
               ما هي مدينتك؟
             </Typography>
             <Input
-              color={isDarkModeActive ? "green" : "gray"}
+              color={isDarkModeActive ? "green" : "deep-purple"}
               label="المدينة _ الحي"
               className={inputStyle}
               value={message.city}
@@ -603,7 +604,7 @@ const Quote = ({ isDarkModeActive }) => {
             </Typography>
             <Textarea
               size="lg"
-              color={isDarkModeActive ? "green" : "gray"}
+              color={isDarkModeActive ? "green" : "deep-purple"}
               label="تفاصيل موقعك"
               className="mb-6 dark:text-darkMode-dark50"
               value={message.locationDetails}
@@ -622,7 +623,7 @@ const Quote = ({ isDarkModeActive }) => {
           <Button
             type="submit"
             variant={isDarkModeActive ? "outlined" : ""}
-            className="dark:text-darkMode-dark50 dark:border-white text-xl bg-gray-800 hover:bg-gray-900 dark:bg-inherit dark:hover:bg-darkMode-dark50 dark:hover:text-darkMode-dark950 duration-200 transition-all"
+            className="dark:text-darkMode-dark50 dark:border-white text-xl bg-deep-purple-400 hover:bg-deep-purple-600 dark:bg-inherit dark:hover:bg-darkMode-dark50 dark:hover:text-darkMode-dark950 duration-200 transition-all"
           >
             {formLoading ? (
               <div className="flex justify-center ">
