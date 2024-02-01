@@ -7,7 +7,7 @@ import americanExpress from "../assets/visas/american-express-svgrepo-com.svg";
 const Footer = () => {
   const images = [americanExpress, discover, mastercard, visa];
   return (
-    <div className="px-2 dark-bg-900 dark-text flex flex-col gap-2 items-center justify-center flex-wrap text-center min-h-[25vh] bg-deep-purple-400 shadow-2xl shadow-gary-900">
+    <div className="px-2 dark-bg-900 dark-text flex flex-col gap-2 items-center justify-center flex-wrap text-center min-h-[25vh] bg-darkMode-dark950 shadow-2xl shadow-gary-900">
       <p className="text-darkMode-dark50 mt-10 sm:mt-0">
         الكاسر الأمني للأنظمة الأمنية الحديثة من الشركات الرائدة فى مجال الأنظمة
         الأمنية والشبكات منذ عام ٢٠٠٧
