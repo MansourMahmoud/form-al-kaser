@@ -259,16 +259,21 @@ const Quote = ({ isDarkModeActive }) => {
             variant={isDarkModeActive ? "outlined" : ""}
             className="dark:text-darkMode-dark50 dark:border-white bg-darkMode-dark900 hover:bg-darkMode-dark800 dark:bg-inherit dark:hover:bg-darkMode-dark50 dark:hover:text-darkMode-dark950 duration-300 transition-all"
           >
-            اذهب إلى متجرنا
+            قم بزيارة متجرنا
           </Button>
         </Link>
       </div>
       {/* <!-- Right column container with form --> */}
       <div className="flex flex-col items-center gap-5">
-        <p className="dark:text-darkMode-dark50 text-center text-darkMode-dark950 text-lg font-bold tracking-wide mb-5 w-[90%] sm:w-[80%] md:w-[70%] lg:w-[50%] text-grbg-gray-700">
-          أهلا وسهلا بك في نموذج اختيار منتج أو خدمة، سيساعدك هذا النموذج في
-          اختيار المنتج المناسب لك
-        </p>
+        <div className="flex flex-col gap-4 justify-center items-center">
+          <p className="dark:text-darkMode-dark50 text-center text-darkMode-dark950 text-2xl font-bold tracking-wider text-grbg-gray-700">
+            نموذج عرض أسعار
+          </p>
+          <p className="dark:text-darkMode-dark50 text-center text-darkMode-dark950 text-sm tracking-wide mb-5 w-[90%] text-grbg-gray-700">
+            أهلا وسهلا بك في نموذج اختيار منتج أو خدمة، سيساعدك هذا النموذج في
+            اختيار المنتج المناسب لك
+          </p>
+        </div>
         <form
           ref={myFrom}
           onSubmit={handleMessage}
