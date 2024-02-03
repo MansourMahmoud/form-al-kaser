@@ -4,7 +4,6 @@ import { TERipple } from "tw-elements-react";
 import {
   Input,
   Button,
-  Typography,
   Menu,
   MenuHandler,
   Textarea,
@@ -12,6 +11,12 @@ import {
   Option,
   Badge,
   Spinner,
+  Checkbox,
+  Card,
+  List,
+  ListItem,
+  ListItemPrefix,
+  Typography,
 } from "@material-tailwind/react";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -60,10 +65,53 @@ const Quote = ({ isDarkModeActive }) => {
     city: "",
     locationDetails: "",
   });
+  const [productsSend, setProductsSend] = useState([]);
+
+  const productsList = [
+    "نظام إنذار السرقة (Burglar Alarm System): BAS",
+    "أجهزة الاستشعار الحركي (Motion Sensors): MS",
+    "كاميرات المراقبة (Closed-Circuit Television - CCTV):",
+    "أنظمة إنذار الحريق (Fire Alarm Systems): FAS",
+    "أنظمة الإنذار الذكية (Smart Alarm Systems): SAS",
+    "أنظمة الإنذار بالحركة (Motion Alarm Systems): MAS",
+    "أقفال الأمان (Security Locks): SL",
+    "أنظمة الإنذار اللاسلكية (Wireless Alarm Systems): WAS",
+    "أجهزة استشعار الزجاج (Glass Break Sensors): GBS",
+    "أنظمة الإنذار بالباب والنافذة (Door and Window Alarm Systems)",
+  ];
+
+  useEffect(() => {
+    const data =
+      productsList.length > 0 &&
+      productsList.map((item, index) => {
+        return {
+          productName: item,
+          isChecked: false,
+          num: "1",
+        };
+      });
+    setProductsSend(data.length > 0 && data);
+  }, []);
 
   const [images, setImages] = useState(null);
 
   const [formLoading, setFormLoading] = useState(false);
+
+  const checkConditions = (arr) => {
+    // التحقق من أن جميع العناصر تحتوي على isChecked === false
+    const allUnchecked = arr.every((item) => item.isChecked === false);
+
+    if (allUnchecked) {
+      return false;
+    } else {
+      // التحقق من أن جميع العناصر التي isChecked === true لديها num > 1
+      const allCheckedWithNumGreaterOne = arr
+        ?.filter((item) => item.isChecked === true)
+        .every((item) => item.num >= 1);
+
+      return allCheckedWithNumGreaterOne;
+    }
+  };
 
   const handleMessage = async (ev) => {
     ev.preventDefault();
@@ -103,8 +151,10 @@ const Quote = ({ isDarkModeActive }) => {
       );
     } else if (!emailIsValid) {
       return toast.error("رجاء اكتب إيميلك بشكل صحيح");
-    } else if (products === "") {
-      return toast.error("تأكد من إختيار المنتج من خانه المنتجات");
+    } else if (!checkConditions(productsSend)) {
+      return toast.error(
+        "يرجى التأكد من اختيار أحد المنتجات، بالإضافة إلى التحقق من العدد. كما يجب أن لا يكون العدد أقل من 1 لأي من المنتجات المختارة."
+      );
     } else if (numberOfProducts === "" || numberOfProducts <= 0) {
       return toast.error(
         "رجاء اخبرنا كم عدد المنتج الذي تريده؟ علي سبيل المثال 1/2/3 ، لا يمكن ان يكون العدد 0 او سالب"
@@ -209,7 +259,7 @@ const Quote = ({ isDarkModeActive }) => {
             variant={isDarkModeActive ? "outlined" : ""}
             className="dark:text-darkMode-dark50 dark:border-white bg-darkMode-dark900 hover:bg-darkMode-dark800 dark:bg-inherit dark:hover:bg-darkMode-dark50 dark:hover:text-darkMode-dark950 duration-300 transition-all"
           >
-            أذهب إلى متجرنا
+            اذهب إلى متجرنا
           </Button>
         </Link>
       </div>
@@ -223,7 +273,7 @@ const Quote = ({ isDarkModeActive }) => {
           ref={myFrom}
           onSubmit={handleMessage}
           dir="rtl"
-          className="flex flex-col gap-2 w-full md:w-[80%] lg:w-[55%] shadow-lg dark:shadow-darkMode-dark50 shadow-darkMode-dark950 p-10"
+          className="flex flex-col gap-2 w-full md:w-[90%] lg:w-[80%] shadow dark:shadow-darkMode-dark50 shadow-darkMode-dark400 p-10"
         >
           {/* <!-- full name --> */}
           <div className={`${fieldStyle}`}>
@@ -315,83 +365,102 @@ const Quote = ({ isDarkModeActive }) => {
             >
               المنتجات
             </Typography>
-            <div className=" grid  grid-cols-1 sm:grid-cols-2 flex-wrap gap-2 w-full">
-              <div className="">
-                <Select
-                  ref={selectProducts}
-                  color={isDarkModeActive ? "green" : "gray"}
-                  label="إختر المنتج"
-                  className=" dark:text-darkMode-dark50"
-                  labelProps={{
-                    className: "",
-                  }}
-                  value={message.products}
-                  onChange={(value) => {
-                    setMessage({ ...message, products: value });
-                  }}
-                  onClick={() => {
-                    setTimeout(() => {
-                      selectProducts?.current?.children[0]?.children[1]?.classList?.remove(
-                        "right-2"
-                      );
-                      selectProducts?.current?.children[0]?.children[1]?.classList?.add(
-                        "left-2"
-                      );
-                    }, 1);
-                  }}
-                  name="products"
-                >
-                  <Option value="ظام إنذار السرقة (Burglar Alarm System): BAS">
-                    نظام إنذار السرقة (Burglar Alarm System): BAS
-                  </Option>
-                  <Option value="أجهزة الاستشعار الحركي (Motion Sensors): MS">
-                    أجهزة الاستشعار الحركي (Motion Sensors): MS
-                  </Option>
-                  <Option value="كاميرات المراقبة (Closed-Circuit Television - CCTV):">
-                    كاميرات المراقبة (Closed-Circuit Television - CCTV):
-                  </Option>
-                  <Option value="أنظمة إنذار الحريق (Fire Alarm Systems):FAS:">
-                    أنظمة إنذار الحريق (Fire Alarm Systems):FAS:
-                  </Option>
-                  <Option value="أنظمة الإنذار الذكية (Smart Alarm Systems): SAS">
-                    أنظمة الإنذار الذكية (Smart Alarm Systems): SAS
-                  </Option>
-                  <Option value="أنظمة الإنذار بالحركة (Motion Alarm Systems): MAS">
-                    أنظمة الإنذار بالحركة (Motion Alarm Systems): MAS
-                  </Option>
-                  <Option value="أقفال الأمان (Security Locks): SL">
-                    أقفال الأمان (Security Locks): SL{" "}
-                  </Option>
-                  <Option value="أنظمة الإنذار اللاسلكية (Wireless Alarm Systems WAS)">
-                    أنظمة الإنذار اللاسلكية (Wireless Alarm Systems WAS)
-                  </Option>
-                  <Option value="أجهزة استشعار الزجاج (Glass Break Sensors) GBS">
-                    أجهزة استشعار الزجاج (Glass Break Sensors) GBS
-                  </Option>
-                  <Option value="أنظمة الإنذار بالباب والنافذة (Door and Window Alarm Systems)">
-                    أنظمة الإنذار بالباب والنافذة (Door and Window Alarm
-                    Systems)
-                  </Option>
-                </Select>
-              </div>
+            <Card className="bg-inherit">
+              <List className="flex flex-col gap-2">
+                {productsSend?.map((item, index) => (
+                  <div
+                    className={`flex flex-col lg:flex-row lg:justify-between p-2 gap-2 ${
+                      index === productsSend?.length - 1
+                        ? ""
+                        : " border-b-[2px] border-gray-300"
+                    }`}
+                    key={index}
+                  >
+                    <ListItem className="p-0">
+                      <label
+                        htmlFor={item?.productName}
+                        className="flex w-full cursor-pointer items-center px-3 py-2 gap-3"
+                      >
+                        <ListItemPrefix className="mr-3">
+                          <Checkbox
+                            id={item?.productName}
+                            ripple={false}
+                            className="hover:before:opacity-0"
+                            containerProps={{
+                              className: "p-0",
+                            }}
+                            checked={item?.isChecked}
+                            onChange={(ev) => {
+                              const isChecked = ev.target.checked;
+                              const existingIndex = productsSend.findIndex(
+                                (p) => p.productName === item?.productName
+                              );
 
-              <div className="">
-                <Input
-                  color={isDarkModeActive ? "green" : "gray"}
-                  label="ادخل عدد المنتج الذي تريده"
-                  className={`${inputStyle}`}
-                  value={message.numberOfProducts}
-                  onChange={(ev) =>
-                    setMessage({
-                      ...message,
-                      numberOfProducts: ev.target.value,
-                    })
-                  }
-                  type="number"
-                  name="numberOfProducts"
-                />
-              </div>
-            </div>
+                              if (existingIndex !== -1) {
+                                // إذا وجد العنصر، نقوم بتحديث حالته
+                                const updatedProductsSend = [...productsSend];
+                                updatedProductsSend[existingIndex] = {
+                                  ...item,
+                                  isChecked,
+                                };
+                                setProductsSend(updatedProductsSend);
+                              } else {
+                                // إذا لم يجد العنصر، نقوم بإضافته
+                                setProductsSend([
+                                  ...productsSend,
+                                  {
+                                    ...item,
+                                    isChecked,
+                                  },
+                                ]);
+                              }
+                            }}
+                          />
+                        </ListItemPrefix>
+                        <Typography color="blue-gray" className="font-medium">
+                          {item?.productName}
+                        </Typography>
+                      </label>
+                    </ListItem>
+                    <div className="flex justify-end items-center lg:justify-start">
+                      {item.isChecked === true && (
+                        <input
+                          type="number"
+                          value={item?.num}
+                          onChange={(ev) => {
+                            const num = ev.target.value;
+                            const existingIndex = productsSend.findIndex(
+                              (p) => p.productName === item?.productName
+                            );
+
+                            if (existingIndex !== -1) {
+                              // إذا وجد العنصر، نقوم بتحديث حالته
+                              const updatedProductsSend = [...productsSend];
+                              updatedProductsSend[existingIndex] = {
+                                ...item,
+                                num,
+                              };
+                              setProductsSend(updatedProductsSend);
+                            } else {
+                              // إذا لم يجد العنصر، نقوم بإضافته
+                              setProductsSend([
+                                ...productsSend,
+                                {
+                                  ...item,
+                                  num,
+                                },
+                              ]);
+                            }
+                          }}
+                          placeholder="عدد المنتج الذي تريده"
+                          className="rounded-md text-center font-bold w-fit py-1 focus:outline-none"
+                        />
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </List>
+            </Card>
           </div>
           {/* end */}
 
