@@ -379,13 +379,14 @@ const Quote = ({ isDarkModeActive }) => {
                     <ListItem className="p-0">
                       <label
                         htmlFor={item?.productName}
-                        className="flex w-full cursor-pointer items-center px-3 py-2 gap-3"
+                        className="flex w-full cursor-pointer items-center px-3 py-2 gap-3 group "
                       >
                         <ListItemPrefix className="mr-3">
                           <Checkbox
+                            color="red"
                             id={item?.productName}
                             ripple={false}
-                            className="hover:before:opacity-0"
+                            className="hover:before:opacity-0 dark:border-darkMode-dark50 dark:group-hover:border-darkMode-dark900"
                             containerProps={{
                               className: "p-0",
                             }}
@@ -417,7 +418,10 @@ const Quote = ({ isDarkModeActive }) => {
                             }}
                           />
                         </ListItemPrefix>
-                        <Typography color="blue-gray" className="font-medium">
+                        <Typography
+                          color="blue-gray"
+                          className="font-medium dark:text-darkMode-dark50 dark:group-hover:text-darkMode-dark900"
+                        >
                           {item?.productName}
                         </Typography>
                       </label>
