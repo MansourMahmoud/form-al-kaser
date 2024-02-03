@@ -266,10 +266,10 @@ const Quote = ({ isDarkModeActive }) => {
       {/* <!-- Right column container with form --> */}
       <div className="flex flex-col items-center gap-5">
         <div className="flex flex-col gap-4 justify-center items-center">
-          <p className="dark:text-darkMode-dark50 text-center text-darkMode-dark950 text-2xl font-bold tracking-wider text-grbg-gray-700">
+          <p className="dark:text-darkMode-dark50 text-center text-darkMode-dark950 text-2xl font-bold tracking-wider">
             نموذج عرض أسعار
           </p>
-          <p className="dark:text-darkMode-dark50 text-center text-darkMode-dark950 text-sm tracking-wide mb-5 w-[90%] text-grbg-gray-700">
+          <p className="dark:text-darkMode-dark400 text-center text-darkMode-dark500 text-sm tracking-wide mb-5 w-[90%]">
             أهلا وسهلا بك في نموذج اختيار منتج أو خدمة، سيساعدك هذا النموذج في
             اختيار المنتج المناسب لك
           </p>
@@ -308,7 +308,7 @@ const Quote = ({ isDarkModeActive }) => {
               color="blue-gray"
               className={typographyStyle}
             >
-              رقم الهاتف
+              رقم الجوال
             </Typography>
             <div className="relative flex">
               <Menu placement="bottom-start">
@@ -330,7 +330,7 @@ const Quote = ({ isDarkModeActive }) => {
                 type="tel"
                 className={`rounded-r-none ${inputStyle} `}
                 color={isDarkModeActive ? "green" : "gray"}
-                label="رقم الهاتف"
+                label="رقم الجوال"
                 value={message.phone}
                 onChange={(ev) =>
                   setMessage({ ...message, phone: ev.target.value })
