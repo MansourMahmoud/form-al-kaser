@@ -518,22 +518,22 @@ const Quote = ({ isDarkModeActive }) => {
             <Card className="w-full bg-inherit">
               <List className="flex flex-col sm:justify-between sm:flex-row">
                 {service?.map((item, index) => (
-                  <ListItem className="p-0">
+                  <ListItem key={index} className="p-0">
                     <label
                       htmlFor={item?.name}
                       className={`${
                         index !== service.length - 1 &&
                         "border-b sm:border-l sm:border-b-0 border-darkMode-dark400 dark:border-darkMode-dark200"
-                      } flex w-full gap-2 group cursor-pointer sm:items-center sm:justify-center px-3 pb-3 pt-2 sm:py-2 `}
+                      } flex w-full group cursor-pointer items-center justify-start sm:items-center sm:justify-center px-3 pb-0 pt-1 sm:py-0 `}
                     >
-                      <ListItemPrefix className="mr-3">
+                      <ListItemPrefix className="mr-0">
                         <Checkbox
                           id={item?.name}
                           ripple={false}
                           color="red"
                           className="hover:before:opacity-0 dark:border-darkMode-dark50 dark:group-hover:border-darkMode-dark900"
                           containerProps={{
-                            className: "p-0",
+                            className: "",
                           }}
                           checked={item?.isChecked}
                           onChange={(ev) => {
