@@ -67,6 +67,27 @@ const Quote = ({ isDarkModeActive }) => {
   });
   const [productsSend, setProductsSend] = useState([]);
 
+  const [service, setService] = useState([
+    {
+      name: "فيـــلا",
+      isChecked: false,
+    },
+    {
+      name: "مــول",
+      isChecked: false,
+    },
+    {
+      name: "مــحل",
+      isChecked: false,
+    },
+    {
+      name: "شقــة",
+      isChecked: false,
+    },
+  ]);
+
+  const serviceData = [{}];
+
   const productsList = [
     "نظام إنذار السرقة (Burglar Alarm System): BAS",
     "أجهزة الاستشعار الحركي (Motion Sensors): MS",
@@ -112,6 +133,16 @@ const Quote = ({ isDarkModeActive }) => {
       return allCheckedWithNumGreaterOne;
     }
   };
+  const checkService = (arr) => {
+    // التحقق من أن جميع العناصر تحتوي على isChecked === false
+    const allUnchecked = arr.every((item) => item.isChecked === false);
+
+    if (allUnchecked) {
+      return false;
+    } else {
+      return true;
+    }
+  };
 
   const handleMessage = async (ev) => {
     ev.preventDefault();
@@ -120,7 +151,6 @@ const Quote = ({ isDarkModeActive }) => {
       fullName,
       phone,
       email,
-      products,
       numberOfProducts,
       region,
       city,
@@ -155,15 +185,19 @@ const Quote = ({ isDarkModeActive }) => {
       return toast.error(
         "يرجى التأكد من اختيار أحد المنتجات، بالإضافة إلى التحقق من العدد. كما يجب أن لا يكون العدد أقل من 1 لأي من المنتجات المختارة."
       );
+    } else if (!checkService(service)) {
+      return toast.error("رجاءً تأكد من اختيار نوع البناء/الموقع.");
     } else if (numberOfProducts === "" || numberOfProducts <= 0) {
       return toast.error(
         "رجاء اخبرنا كم عدد المنتج الذي تريده؟ علي سبيل المثال 1/2/3 ، لا يمكن ان يكون العدد 0 او سالب"
       );
-    } else if (images === null) {
-      return toast.error(
-        "رجاء ارفق بعض الصور لموقعك او مكانك حتي نعرف كيف سنساعدك"
-      );
-    } else if (region === "") {
+    }
+    //  else if (images === null) {
+    //   return toast.error(
+    //     "رجاء ارفق بعض الصور لموقعك او مكانك حتي نعرف كيف سنساعدك"
+    //   );
+    // }
+    else if (region === "") {
       return toast.error("رجاء اكتب منطقتك");
     } else if (city === "") {
       return toast.error("رجاء اكتب مدينتك");
@@ -177,7 +211,6 @@ const Quote = ({ isDarkModeActive }) => {
       formData.append("fullName", message.fullName);
       formData.append("phone", message.phone);
       formData.append("email", message.email);
-      formData.append("products", message.products);
       formData.append("numberOfProducts", message.numberOfProducts);
       formData.append("region", message.region);
       formData.append("city", message.city);
@@ -472,6 +505,77 @@ const Quote = ({ isDarkModeActive }) => {
             </Card>
           </div>
           {/* end */}
+
+          {/* <!-- Type of construction/location --> */}
+          <div className={`${fieldStyle} mt-2`}>
+            <Typography
+              variant="h6"
+              color="blue-gray"
+              className={typographyStyle}
+            >
+              ما هو نوع البناء / الموقع؟
+            </Typography>
+            <Card className="w-full bg-inherit">
+              <List className="flex flex-col sm:justify-between sm:flex-row">
+                {service?.map((item, index) => (
+                  <ListItem className="p-0">
+                    <label
+                      htmlFor={item?.name}
+                      className={`${
+                        index !== service.length - 1 &&
+                        "border-b sm:border-l sm:border-b-0 border-darkMode-dark400 dark:border-darkMode-dark200"
+                      } flex w-full gap-2 group cursor-pointer sm:items-center sm:justify-center px-3 pb-3 pt-2 sm:py-2 `}
+                    >
+                      <ListItemPrefix className="mr-3">
+                        <Checkbox
+                          id={item?.name}
+                          ripple={false}
+                          color="red"
+                          className="hover:before:opacity-0 dark:border-darkMode-dark50 dark:group-hover:border-darkMode-dark900"
+                          containerProps={{
+                            className: "p-0",
+                          }}
+                          checked={item?.isChecked}
+                          onChange={(ev) => {
+                            const isChecked = ev.target.checked;
+                            const existingIndex = service.findIndex(
+                              (p) => p.name === item?.name
+                            );
+
+                            if (existingIndex !== -1) {
+                              // إذا وجد العنصر، نقوم بتحديث حالته
+                              const updatedService = [...service];
+                              updatedService[existingIndex] = {
+                                ...item,
+                                isChecked,
+                              };
+                              setService(updatedService);
+                            } else {
+                              // إذا لم يجد العنصر، نقوم بإضافته
+                              setService([
+                                ...service,
+                                {
+                                  ...item,
+                                  isChecked,
+                                },
+                              ]);
+                            }
+                          }}
+                        />
+                      </ListItemPrefix>
+                      <Typography
+                        color="blue-gray"
+                        className="font-medium dark:text-darkMode-dark50 dark:group-hover:text-darkMode-dark900"
+                      >
+                        {item?.name}
+                      </Typography>
+                    </label>
+                  </ListItem>
+                ))}
+              </List>
+            </Card>
+          </div>
+          {/* end Type of construction/location */}
 
           {/*images */}
           <div className="flex flex-col gap-y-2  group">
