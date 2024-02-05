@@ -67,6 +67,9 @@ const Quote = ({ isDarkModeActive }) => {
   });
   const [productsSend, setProductsSend] = useState([]);
 
+  const [showInput, setShowInput] = useState(false);
+  const [newService, setNewService] = useState("");
+
   const [service, setService] = useState([
     {
       name: "فيـــلا",
@@ -85,8 +88,6 @@ const Quote = ({ isDarkModeActive }) => {
       isChecked: false,
     },
   ]);
-
-  const serviceData = [{}];
 
   const productsList = [
     "نظام إنذار السرقة (Burglar Alarm System): BAS",
@@ -185,8 +186,10 @@ const Quote = ({ isDarkModeActive }) => {
       return toast.error(
         "يرجى التأكد من اختيار أحد المنتجات، بالإضافة إلى التحقق من العدد. كما يجب أن لا يكون العدد أقل من 1 لأي من المنتجات المختارة."
       );
-    } else if (!checkService(service)) {
+    } else if (!checkService(service) && !showInput) {
       return toast.error("رجاءً تأكد من اختيار نوع البناء/الموقع.");
+    } else if (showInput && newService === "") {
+      return toast.error("رجاء اكتب نوع البناء / الموقع");
     } else if (numberOfProducts === "" || numberOfProducts <= 0) {
       return toast.error(
         "رجاء اخبرنا كم عدد المنتج الذي تريده؟ علي سبيل المثال 1/2/3 ، لا يمكن ان يكون العدد 0 او سالب"
@@ -524,6 +527,9 @@ const Quote = ({ isDarkModeActive }) => {
                       className={`${
                         index !== service.length - 1 &&
                         "border-b sm:border-l sm:border-b-0 border-darkMode-dark400 dark:border-darkMode-dark200"
+                      } ${
+                        index === service.length - 1 &&
+                        "border-b sm:border-l-0 sm:border-b-0 border-darkMode-dark400 dark:border-darkMode-dark200"
                       } flex w-full group cursor-pointer items-center justify-start sm:items-center sm:justify-center px-3 pb-0 pt-1 sm:py-0 `}
                     >
                       <ListItemPrefix className="mr-0">
@@ -572,6 +578,47 @@ const Quote = ({ isDarkModeActive }) => {
                     </label>
                   </ListItem>
                 ))}
+              </List>
+              <List className="flex sm:flex-row flex-col sm:items-center sm:justify-between">
+                {/* زر الإضافة */}
+                <ListItem className="p-0 ">
+                  <label
+                    htmlFor="addOther"
+                    className="flex group grow cursor-pointer items-center justify-start  px-3 pb-0 pt-1 sm:py-0"
+                  >
+                    <ListItemPrefix className="mr-0">
+                      <Checkbox
+                        id="addOther"
+                        ripple={false}
+                        color="red"
+                        className="hover:before:opacity-0 dark:border-darkMode-dark50 dark:group-hover:border-darkMode-dark900"
+                        containerProps={{
+                          className: "",
+                        }}
+                        checked={showInput}
+                        onChange={() => setShowInput(!showInput)}
+                      />
+                    </ListItemPrefix>
+                    <Typography
+                      color="blue-gray"
+                      className="font-medium dark:text-darkMode-dark50 dark:group-hover:text-darkMode-dark900"
+                    >
+                      إضافة أخرى
+                    </Typography>
+                  </label>
+                </ListItem>
+                <div className="flex justify-end my-2">
+                  {/* حقل الإدخال لإضافة قيمة جديدة */}
+                  {showInput && (
+                    <input
+                      type="text"
+                      placeholder="اكتب نوع البناء"
+                      className="w-full px-4 py-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow border-[1px] border-darkMode-dark300"
+                      value={newService}
+                      onChange={(e) => setNewService(e.target.value)}
+                    />
+                  )}
+                </div>
               </List>
             </Card>
           </div>

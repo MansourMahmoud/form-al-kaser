@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { Toaster } from "react-hot-toast";
 import Quote from "./pages/quote";
+import PackagesDeals from "./pages/packages-deals";
 
 const Layout = () => {
   const [isDarkModeActive, setIsDarkModeActive] = useState(false);
@@ -17,12 +18,18 @@ const Layout = () => {
       <Toaster position="top-center" reverseOrder={false} />
 
       <Header setIsDarkModeActive={setIsDarkModeActive} />
-      <Routes>
-        <Route
-          path="/"
-          element={<Quote isDarkModeActive={isDarkModeActive} />}
-        />
-      </Routes>
+      <div className="min-h-[80vh] my-10">
+        <Routes>
+          <Route
+            path="/"
+            element={<Quote isDarkModeActive={isDarkModeActive} />}
+          />
+          <Route
+            path="/packages-deals"
+            element={<PackagesDeals isDarkModeActive={isDarkModeActive} />}
+          />
+        </Routes>
+      </div>
       <Footer />
     </div>
   );
