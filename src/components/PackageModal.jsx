@@ -6,6 +6,7 @@ import {
   DialogBody,
   DialogFooter,
 } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
 
 const PackageModal = ({ packageItem, open, setOpen }) => {
   const handleOpen = () => setOpen(!open);
@@ -86,14 +87,16 @@ const PackageModal = ({ packageItem, open, setOpen }) => {
           </div>
         </DialogBody>
         <DialogFooter className="flex gap-2 items-center justify-start">
-          <Button
-            variant="gradient"
-            color="green"
-            className="text-lg px-5 py-2"
-            onClick={handleOpen}
-          >
-            اطلب الآن!
-          </Button>
+          <Link to={`/packages-deals-form`}>
+            <Button
+              variant="gradient"
+              color="green"
+              className="text-lg px-5 py-2"
+              onClick={handleOpen}
+            >
+              اطلب الآن!
+            </Button>
+          </Link>
           <Button
             variant="text"
             className="text-lg px-4 py-2 dark:text-darkMode-dark50"
