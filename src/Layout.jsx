@@ -5,6 +5,7 @@ import Footer from "./components/Footer";
 import { Toaster } from "react-hot-toast";
 import Quote from "./pages/quote";
 import PackagesDeals from "./pages/packages-deals";
+import PackagesDealsForm from "./pages/packages-deals-form";
 
 const Layout = () => {
   const [isDarkModeActive, setIsDarkModeActive] = useState(false);
@@ -27,6 +28,10 @@ const Layout = () => {
           <Route
             path="/packages-deals"
             element={<PackagesDeals isDarkModeActive={isDarkModeActive} />}
+          />
+          <Route
+            path="/packages-deals-form"
+            element={<PackagesDealsForm isDarkModeActive={isDarkModeActive} />}
           />
         </Routes>
       </div>

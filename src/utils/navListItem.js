@@ -8,4 +8,8 @@ export const navListItem = [
     name: "باقات حصرية",
     goTo: "/packages-deals",
   },
+  {
+    name: "عرض أسعار الباقات",
+    goTo: "/packages-deals-form",
+  },
 ];

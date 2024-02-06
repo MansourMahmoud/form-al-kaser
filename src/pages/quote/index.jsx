@@ -289,13 +289,19 @@ const Quote = ({ isDarkModeActive }) => {
 
   return (
     <Container className="min-h-screen flex flex-col gap-8">
-      <div>
-        <Link target="_blank" to={`https://www.al-kaser.com/products`}>
+      <div className="flex items-center gap-2">
+        <a target="_blank" href="https://www.al-kaser.com/products">
           <Button
             variant={isDarkModeActive ? "outlined" : ""}
-            className="dark:text-darkMode-dark50 dark:border-white bg-darkMode-dark900 hover:bg-darkMode-dark800 dark:bg-inherit dark:hover:bg-darkMode-dark50 dark:hover:text-darkMode-dark950 duration-300 transition-all"
+            className="dark:text-darkMode-dark50 text-base dark:border-white bg-darkMode-dark900 hover:bg-darkMode-dark800 dark:bg-inherit dark:hover:bg-darkMode-dark50 dark:hover:text-darkMode-dark950 duration-300 transition-all"
           >
             قم بزيارة متجرنا
+          </Button>
+        </a>
+
+        <Link to={`/packages-deals`}>
+          <Button className="dark:text-darkMode-dark800 text-base dark:border-white bg-gradient-to-tl from-red-900 to-purple-500 dark:from-red-500 dark:to-darkMode-dark50  dark:bg-inherit dark:hover:bg-darkMode-dark50 duration-300 transition-all">
+            تعـرف علـي آخـر العـروض
           </Button>
         </Link>
       </div>

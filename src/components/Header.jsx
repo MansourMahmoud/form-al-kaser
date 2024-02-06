@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Navbar,
-  MobileNav,
-  Button,
-  IconButton,
-} from "@material-tailwind/react";
+import { Navbar, Button, IconButton, Collapse } from "@material-tailwind/react";
 import { navListItem } from "../utils/navListItem";
 import { Link } from "react-router-dom";
 import IconDarkMode from "../components/IconDarkMode";
@@ -26,15 +21,15 @@ const Header = ({ setIsDarkModeActive }) => {
   const navList = (
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0  lg:flex-row lg:items-center lg:gap-2 xl:gap-4">
       {navListItem?.map((item, index) => (
-        <Button
-          variant="text"
-          className="font-normal dark-text dark-style-hover text-darkMode-dark50 hover:bg-darkMode-dark100 hover:text-darkMode-dark950 duration-200 p-2 "
-          onClick={() => setOpenNav(false)}
-        >
-          <Link to={item.goTo} className="flex items-center">
+        <Link key={index} to={item.goTo} className="flex items-center">
+          <Button
+            variant="text"
+            className="font-normal dark-text text-base dark-style-hover text-darkMode-dark50 hover:bg-darkMode-dark100 hover:text-darkMode-dark950 duration-200 p-2"
+            onClick={() => setOpenNav(false)}
+          >
             {item.name}
-          </Link>
-        </Button>
+          </Button>
+        </Link>
       ))}
     </ul>
   );
@@ -43,9 +38,9 @@ const Header = ({ setIsDarkModeActive }) => {
     <div className="bg-darkMode-dark900 sticky top-0 z-50">
       <Navbar className="dark:bg-darkMode-dark900 bg-darkMode-dark900 border-darkMode-dark950  h-max max-w-full rounded-none px-4 py-2 lg:px-8 lg:py-4 dark:border-darkMode-dark950 dark:outline-darkMode-dark950">
         <div className="flex items-center justify-between text-blue-gray-900">
-          <Link
+          <a
             target="_blank"
-            to="https://www.al-kaser.com/"
+            href="https://www.al-kaser.com/"
             className="mr-4 cursor-pointer hover:scale-105 hover:shadow-sm p-2 hover:rounded-full hover:shadow-white duration-300 transition-all ease-in-out "
           >
             <img
@@ -55,7 +50,7 @@ const Header = ({ setIsDarkModeActive }) => {
               width={105}
               height={105}
             />
-          </Link>
+          </a>
           <div className="flex items-center justify-between lg:gap-0 lg:w-full">
             <div className="flex items-center">
               <div className="mr-4 hidden lg:block">{navList}</div>
@@ -108,12 +103,12 @@ const Header = ({ setIsDarkModeActive }) => {
         </div>
 
         {/* mobile */}
-        <MobileNav
+        <Collapse
           className={`${openNav === true && "mt-5"} duration-150`}
           open={openNav}
         >
           {navList}
-        </MobileNav>
+        </Collapse>
         {/* end */}
       </Navbar>
     </div>
