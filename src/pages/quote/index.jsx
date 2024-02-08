@@ -59,8 +59,6 @@ const Quote = ({ isDarkModeActive }) => {
     fullName: "",
     phone: "",
     email: "",
-    products: "",
-    numberOfProducts: "1",
     region: "",
     city: "",
     locationDetails: "",
@@ -89,20 +87,22 @@ const Quote = ({ isDarkModeActive }) => {
     },
   ]);
 
-  const productsList = [
-    "نظام إنذار السرقة (Burglar Alarm System): BAS",
-    "أجهزة الاستشعار الحركي (Motion Sensors): MS",
-    "كاميرات المراقبة (Closed-Circuit Television - CCTV):",
-    "أنظمة إنذار الحريق (Fire Alarm Systems): FAS",
-    "أنظمة الإنذار الذكية (Smart Alarm Systems): SAS",
-    "أنظمة الإنذار بالحركة (Motion Alarm Systems): MAS",
-    "أقفال الأمان (Security Locks): SL",
-    "أنظمة الإنذار اللاسلكية (Wireless Alarm Systems): WAS",
-    "أجهزة استشعار الزجاج (Glass Break Sensors): GBS",
-    "أنظمة الإنذار بالباب والنافذة (Door and Window Alarm Systems)",
-  ];
+  const [isSet, setIsSet] = useState(false);
 
   useEffect(() => {
+    const productsList = [
+      "نظام إنذار السرقة (Burglar Alarm System): BAS",
+      "أجهزة الاستشعار الحركي (Motion Sensors): MS",
+      "كاميرات المراقبة (Closed-Circuit Television - CCTV):",
+      "أنظمة إنذار الحريق (Fire Alarm Systems): FAS",
+      "أنظمة الإنذار الذكية (Smart Alarm Systems): SAS",
+      "أنظمة الإنذار بالحركة (Motion Alarm Systems): MAS",
+      "أقفال الأمان (Security Locks): SL",
+      "أنظمة الإنذار اللاسلكية (Wireless Alarm Systems): WAS",
+      "أجهزة استشعار الزجاج (Glass Break Sensors): GBS",
+      "أنظمة الإنذار بالباب والنافذة (Door and Window Alarm Systems)",
+    ];
+
     const data =
       productsList.length > 0 &&
       productsList.map((item, index) => {
@@ -113,7 +113,7 @@ const Quote = ({ isDarkModeActive }) => {
         };
       });
     setProductsSend(data.length > 0 && data);
-  }, []);
+  }, [isSet]);
 
   const [images, setImages] = useState(null);
 
@@ -134,6 +134,13 @@ const Quote = ({ isDarkModeActive }) => {
       return allCheckedWithNumGreaterOne;
     }
   };
+  const checkProductsBeforeSend = (arr) => {
+    // التحقق من أن جميع العناصر تحتوي على isChecked === false
+    const allChecked = arr.filter((item) => item.isChecked === true);
+
+    return allChecked;
+  };
+
   const checkService = (arr) => {
     // التحقق من أن جميع العناصر تحتوي على isChecked === false
     const allUnchecked = arr.every((item) => item.isChecked === false);
@@ -144,19 +151,17 @@ const Quote = ({ isDarkModeActive }) => {
       return true;
     }
   };
+  const checkServiceBeforeSend = (arr) => {
+    // التحقق من أن جميع العناصر تحتوي على isChecked === false
+    const allChecked = arr.filter((item) => item.isChecked === true);
+
+    return allChecked;
+  };
 
   const handleMessage = async (ev) => {
     ev.preventDefault();
 
-    const {
-      fullName,
-      phone,
-      email,
-      numberOfProducts,
-      region,
-      city,
-      locationDetails,
-    } = message;
+    const { fullName, phone, email, region, city, locationDetails } = message;
 
     const isEmailValid = (email) => {
       // ريجيولر إكسبريشن للتحقق من صحة الإيميل
@@ -190,10 +195,6 @@ const Quote = ({ isDarkModeActive }) => {
       return toast.error("رجاءً تأكد من اختيار نوع البناء/الموقع.");
     } else if (showInput && newService === "") {
       return toast.error("رجاء اكتب نوع البناء / الموقع");
-    } else if (numberOfProducts === "" || numberOfProducts <= 0) {
-      return toast.error(
-        "رجاء اخبرنا كم عدد المنتج الذي تريده؟ علي سبيل المثال 1/2/3 ، لا يمكن ان يكون العدد 0 او سالب"
-      );
     }
     //  else if (images === null) {
     //   return toast.error(
@@ -214,14 +215,31 @@ const Quote = ({ isDarkModeActive }) => {
       formData.append("fullName", message.fullName);
       formData.append("phone", message.phone);
       formData.append("email", message.email);
-      formData.append("numberOfProducts", message.numberOfProducts);
       formData.append("region", message.region);
       formData.append("city", message.city);
       formData.append("locationDetails", message.locationDetails);
 
-      Array.from(images).forEach((img) => {
-        formData.append("images", img);
+      const getProductsAndSend = checkProductsBeforeSend(productsSend);
+
+      getProductsAndSend.forEach((product) => {
+        formData.append("products", JSON.stringify(product));
       });
+
+      const getServiceAndSend = checkServiceBeforeSend(service);
+
+      getServiceAndSend.forEach((service) => {
+        formData.append("services", JSON.stringify(service));
+      });
+
+      if (showInput) {
+        formData.append("newService", newService);
+      }
+
+      if (images !== null) {
+        Array.from(images).forEach((img) => {
+          formData.append("images", img);
+        });
+      }
 
       const config = {
         headers: { "content-type": "multipart/form-data" },
@@ -232,7 +250,7 @@ const Quote = ({ isDarkModeActive }) => {
 
         // استخدام toast.promise للإشعارات
         await toast.promise(
-          axios.post("http://localhost:3001/send", formData, config),
+          axios.post("https://al-kaser.onrender.com/send", formData, config),
           {
             loading: "برجاء الانتظار قليلا جاري ارسال رسالتك...",
             success: (res) => {
@@ -240,13 +258,23 @@ const Quote = ({ isDarkModeActive }) => {
                 fullName: "",
                 phone: "",
                 email: "",
-                products: "",
-                numberOfProducts: "1",
                 region: "",
                 city: "",
                 locationDetails: "",
               });
               setImages(null);
+              setService((prevService) => {
+                return prevService.map((item) => {
+                  return { ...item, isChecked: false }; // تحديث isChecked إلى القيمة الافتراضية false
+                });
+              });
+
+              if (showInput) {
+                setShowInput(false);
+                setNewService("");
+              }
+              setProductsSend([]);
+              setIsSet(!isSet);
               return `${res.data.message}`;
             },
 
