@@ -248,7 +248,7 @@ const Quote = ({ isDarkModeActive }) => {
       try {
         setFormLoading(true);
 
-        // استخدام toast.promise للإشعارات
+        // استخدام toast.promise للإشعارات //
         await toast.promise(
           axios.post("https://al-kaser.onrender.com/send", formData, config),
           {
@@ -264,7 +264,7 @@ const Quote = ({ isDarkModeActive }) => {
               });
               setImages(null);
               setService((prevService) => {
-                return prevService.map((item) => {
+                return prevService?.map((item) => {
                   return { ...item, isChecked: false }; // تحديث isChecked إلى القيمة الافتراضية false
                 });
               });
